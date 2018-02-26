@@ -2,6 +2,7 @@
 // Action Types
 export const Types = {
   ADD: 'favorites/ADD',
+  REMOVE: 'favorites/REMOVE',
   SEARCH: 'favorites/SEARCH',
 };
 
@@ -12,6 +13,8 @@ export default function favorites(state = initialState, action) {
   switch (action.type) {
     case Types.ADD:
       return [...state, action.payload.repository];
+    case Types.REMOVE:
+      return state.filter(repository => repository.id !== action.payload.id);
     default:
       return state;
   }
@@ -23,6 +26,15 @@ export function addFavorite(repositoryName) {
     type: Types.SEARCH,
     payload: {
       repositoryName,
+    },
+  };
+}
+
+export function removeFavorite(id) {
+  return {
+    type: Types.REMOVE,
+    payload: {
+      id,
     },
   };
 }
